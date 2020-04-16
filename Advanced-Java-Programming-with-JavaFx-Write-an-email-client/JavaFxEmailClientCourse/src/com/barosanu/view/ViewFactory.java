@@ -8,7 +8,6 @@ import com.barosanu.controller.OptionsWindowController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,13 +16,19 @@ import java.util.ArrayList;
 public class ViewFactory {
 
     private EmailManager emailManager;
-    private ArrayList<Stage> activeStages = new ArrayList<>();
+    private ArrayList<Stage> activeStages;
+    private boolean mainViewInitialized = false;
 
     private ColorTheme colorTheme = ColorTheme.DARK;
     private FontSize fontSize = FontSize.MEDIUM;
 
     public ViewFactory(EmailManager emailManager) {
         this.emailManager = emailManager;
+        activeStages = new ArrayList<>();
+    }
+
+    public boolean isMainViewInitialized() {
+        return this.mainViewInitialized;
     }
 
     public void showLoginWindow() {
@@ -38,6 +43,7 @@ public class ViewFactory {
 
         BaseController controller = new MainWindowController(emailManager, this, "MainWindow.fxml");
         initializeStage(controller);
+        mainViewInitialized = true;
     }
 
     public void showOptionsWindow() {
