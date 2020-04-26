@@ -170,3 +170,41 @@
     * release() -> adds a permit
     * Semaphore just keeps a count of the number available
     * new Semaphore(int permits, boolean fair)!!
+
+* ExecutorService
+    * 1 - ExecutorService executorService = Executors.newCachedThreadPool();
+        * going to return an executorService that can dynamically reuse threads
+        * Before starting a job -> it going to check whether there are any threads that finished the job... reuse them
+        * If there are no waiting threads -> it is going to create another one
+        * Good for the processor... Effective solution!!
+    * 2 - ExecutorService executorService = Executors.newFIxedThreadPool(N);
+        * maximize the number of threads
+        * if we want to start a job -> if all the threads are busy, we have to wait for one to terminate.
+    * 3 - ExecutorService executorService = Executors.newSingleThreadExecutor();
+        * It uses a single thread for the job
+        * execute() -> runnable + callable
+        * submit() -> runnable
+
+
+
+<h1>Concurrent Collections</h1>
+
+<h2>Latch</h2>
+
+* This is used to synchronize one or more tasks by forcing them to wait for the completion of a set of operations being performed by other tasks
+* You give an initial count to a COuntDownLAtch object, and any task that calls await()
+    * On that object will block until the count reaches zero
+
+* Other tasks may call countDown() on the object to reduce the count, presumably when a task finishes its job
+* a CountDownLAtch --> the count cannot be reset!!
+    * If you need a version that resets the count, you can use a CycliBarrier instead
+
+* The tasks that call countDown() are not blocked when they make that call.
+    * Only the call to await() is blocked until the count reaches zero
+
+* A typical use is to divide a problem into N independently solvable tasks and create a CountDownLatch with a value of N
+    * When each task is finished it calls countDown() on the latch. TAsks waiting for the problem to be solved call await()
+        * On the latch to hold themselves back until it is completed
+
+
+* For example: you want to trigger something after 10 000 users download an image!!

@@ -1,7 +1,5 @@
-package main;
+package main.basicmultithreading;
 
-
-import org.omg.PortableServer.THREAD_POLICY_ID;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;

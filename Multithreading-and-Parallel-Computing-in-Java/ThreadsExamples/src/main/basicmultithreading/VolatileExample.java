@@ -1,4 +1,4 @@
-package main;
+package main.basicmultithreading;
 
 class Worker implements Runnable {
 
