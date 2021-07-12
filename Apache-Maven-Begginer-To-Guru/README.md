@@ -83,3 +83,136 @@
   * Compile adding the libraries in classpath
 * java -classpath ./lib/*:./ HelloWorld
   * pick up everything at lib and root folder
+
+
+# Compiling and Packaging with Maven
+
+* You should have a file named pom.xml at root directory
+```
+<project>
+  <modelVersion>4.0.0</modelVersion>
+ 
+  <groupId>com.mycompany.app</groupId>
+  <artifactId>my-module</artifactId>
+  <version>1</version>
+
+  <properties>
+    <maven.compiler.source>1.6</maven.compiler.source>
+    <maven.compiler.target>1.6</maven.compiler.target>
+  </properties>
+
+</project>
+```
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>guru.springframework</groupId>
+    <artifactId>helloworld</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
+</project>
+```
+
+* mvn clean
+  * clean the environmnent
+  * It will delete target folder, all our build artifacts
+* mvn package
+  * create a target folder with a jar
+* You can run mvn clean package
+* unzip JARFILE.jar
+
+# Adding Dependencies in maven
+
+* Inside project tag write:
+```
+<dependencies>
+  <dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-lang3</artifactId>
+    <version>3.8.1</version>
+  </dependency>
+</dependencies>
+```
+
+# Goals
+* mvn clean
+* mvn validate
+* mvn compile
+* mvn test
+* mvn package
+* mvn verify
+* mvn install
+* mvn site
+* mvn deploy
+
+# Questions
+* What does pom stand for?
+  * Project Object Model
+
+* What is a xsd file?
+  * This refers to an XML Schema
+
+* What is the term used for the combination of Group ID, Artifact Id, and Version?
+  * Maven Cordinades
+
+* What command can you use to tell what version of Maven you are using?
+  * mvn --version
+
+* What command do you use to create a jar file from your Maven project?
+  * mvn package
+
+* What directory are build artifacts placed in by Maven?
+  * /target
+
+* How do you add a 3rd party JAR to your Maven project?
+  * Add a dependency section to the project POM, add the 3rd party JAR using MAVEN coordinates
+
+
+# Maven Basics
+
+## Maven Coordinates
+
+* Maven Coordinates are used to identify artifacts
+* Together, they identify a 'location' in a Maven repository
+  * **groupId** - Typically unique to an organization. Often the organization's reverse domain is used. But not always. Can be just 'junit'.
+  * **artifactId** - Typically the project name. A descriptor for the artifact.
+  * **version** - refers to a specific version of the project.
+* **groupId** and **version** can be inherited from a parent POM.
+
+## Maven Versions
+
+* Example - 3.2.1-987-beta
+* Major Version - First number - 3
+* Minor Version - Second number - 2
+* Incremental Version (patch) - third number - 1
+* Build Number - from CI Build - 987
+* Qualifier - String Qualifier - 'beta'
+* Most common in use is just major.minor.incremental (3.2.1)
+
+## Snapshot Versions
+
+* Example - 3.2.1-SNAPSHOT
+* The SNAPSHOT suffix is an important qualifier to Maven behavior
+  * Tells Maven this is a development version
+  * Not stable, and Maven should check for newer versions
+  * Maven will first check locally, then check remote repositories
+  * By default, Maven will check remote repositories once per day
+    * Option is configurable
+
+## Maven Repositories
+
+* Maven Repositories are a location where project artifacts are stored
+* Types:
+  * Local - Repository on local file system - <user home>/.m2/
+  * Central - Public repository
+
