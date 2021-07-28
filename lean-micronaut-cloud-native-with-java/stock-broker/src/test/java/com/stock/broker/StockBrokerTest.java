@@ -1,5 +1,6 @@
 package com.stock.broker;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.runtime.EmbeddedApplication;
@@ -43,5 +44,11 @@ class StockBrokerTest {
         final String result = client.toBlocking().retrieve("/hello/en");
         assertEquals("Hello", result);
     }
+
+//    @Test
+//    void returnsGreetingAsJson() {
+//        ObjectNode result = client.toBlocking().retrieve("/hello/json", ObjectNode.class);
+//        assertEquals("Hello", result);
+//    }
 
 }

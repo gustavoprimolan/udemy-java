@@ -298,3 +298,227 @@ public class HelloWorldService {
   * DELETE
     * /account/watchlist +/account/watchlist-reactive
 
+
+## Open API and Swagger
+* https://micronaut-projects.github.io/micronaut-openapi/latest/guide/index.html
+* pom.xml
+```xml
+    <dependencies>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-models</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    </dependencies>
+
+    <build>
+    <plugins>
+      <plugin>
+        <groupId>io.micronaut.build</groupId>
+        <artifactId>micronaut-maven-plugin</artifactId>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <annotationProcessorPaths combine.children="append">
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+            <!-- THIS ONE! -->
+            <path>
+              <groupId>io.micronaut.openapi</groupId>
+              <artifactId>micronaut-openapi</artifactId>
+              <version>2.6.0</version>
+            </path>
+            <!-- THIS ONE! -->
+          </annotationProcessorPaths>
+          <!-- NEED THIS! \/ -->
+          <fork>true</fork>
+          <!-- NEED THIS! /\ -->
+          <compilerArgs>
+          <!-- THIS ONE! -->
+            <arg>-J-Dmicronaut.openapi.views.spec=redoc.enabled=true,rapidoc.enabled=true,swagger-ui.enabled=true,swagger-ui.theme=flattop</arg>
+            <!-- THIS ONE! -->
+            <arg>-Amicronaut.processing.group=com.stock.broker</arg>
+            <arg>-Amicronaut.processing.module=stock-broker</arg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+
+```
+
+* application.yml
+
+```yml
+micronaut:
+  application:
+    name: stockBroker
+  server:
+    port: 8081
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+      redoc:
+        paths: classpath:META-INF/swagger/views/redoc
+        mapping: /redoc/**
+      rapidoc:
+        paths: classpath:META-INF/swagger/views/rapidoc
+        mapping: /rapidoc/**
+      swagger-ui:
+        paths: classpath:META-INF/swagger/views/swagger-ui
+        mapping: /redoc/**
+
+```
+
+* Java Application.class
+
+```java
+
+package com.stock.broker;
+
+import io.micronaut.context.ApplicationContext;
+import io.micronaut.runtime.Micronaut;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+
+@OpenAPIDefinition(
+        info = @Info(
+                title = "mn-stock-broker",
+                version = "0.1",
+                description = "Udemy Micronaut Course",
+                license = @License(name = "MIT")
+        )
+)
+public class Application {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Application.class);
+
+    public static void main(String[] args) {
+        ApplicationContext context = Micronaut.run(Application.class, args);
+        HelloWorldService service = context.getBean(HelloWorldService.class);
+        LOG.info(service.sayHi());
+//        context.close();
+    }
+}
+
+```
+
+* http://localhost:8081/swagger-ui
+* http://localhost:8081/rapidoc
+* http://localhost:8081/redoc
+
+
+## JSON SETTINGS:
+
+```yml
+
+#JSON Settings
+#TYPE OF PROPERTY NAMES = SNAKE CASE like_that
+jackson:
+ property-naming-strategy: SNAKE_CASE
+ serialization:
+   writeDatesAsTimestamps: false
+   writeDatesWithZoneId: true
+   writeDateTimestampsAsNanoseconds: false
+ generator:
+   writeNumbersAsStrings: true
+   writeBigDecimalAsPlain: true
+ deserialization:
+   failOnUnknownProperties: false
+
+```
+
+## JSON Web Token Authentication (JWT)
+
+![](imgs/01.png)
+
+* Dependencies
+
+```xml
+
+<dependency>
+  <groupId>io.micronaut.security</groupId>
+  <artifactId>micronaut-security-jwt</artifactId>
+</dependency>
+<dependency>
+  <groupId>io.micronaut.security</groupId>
+  <artifactId>micronaut-security-annotations</artifactId>
+</dependency>
+
+ ```
+
+ * To request default /login implementation
+
+ ```
+curl -X "POST" "http://localhost:8080/login" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+  "username": "euler",
+  "password": "password"
+}'
+
+ ```
+
+ ## Micronaut Data
+
+ * Precomputed Queries at compilation time
+ * Reflection Free AOP -> No runtime overhead
+ * Type Safe
+ * JPA
+  * Hibernate
+* JDBC
+  * Proprietary by micronaut
+
+
+## JDBC x JPA
+
+* JDBC
+  * More Efficient
+  * Fewer Dialects
+  * DTOs
+  * Optimized Reads
+  * Better or Serveless
+
+* Hibernate
+  * Greater Memory Requirements
+  * More Dialects
+  * Single Entity -> Table
+  * Optimized Writes
+  * Cold start an Issue
+ 
+* Benchmarks
+  * https://github.com/micronaut-projects/micronaut-data/tree/master/benchmarks
+
+* Micronaut JPA
+  * Uses Hibernate, which computes queries at runtime.
+![](imgs/02.png)
+
+* Micronaut Data JDBC
+  * Generates SQL directly => Needs dialect definition
+![](imgs/03.png)
+
+* Micronaut Data & Schema Migration
+  * Pair Micronaut Data with Schema Migration Tool
+  * Flyway or Liquibase
+  * Disable schema generation in Hibernate
+
+* Micronaut Data Transactions
+  * Micronaut or Spring Transaction Manager Supported.
+  * @Transaction
+  * Transaction Manager
+
+* Micronaut Data & GraalVM native image
+  * Both JPA & JDBC supported
+  * Smaller images with JDBC

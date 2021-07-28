@@ -4,11 +4,15 @@ import com.stock.broker.broker.models.WatchList;
 import com.stock.broker.broker.stores.InMemoryAccountStore;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
+// AUTHENTICATION IS REQUIRED
+@Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/account/watchlist")
 public class WatchListController {
 
