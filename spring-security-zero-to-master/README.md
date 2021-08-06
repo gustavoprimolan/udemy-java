@@ -46,3 +46,49 @@
 ![](imgs/02.png)
 
 * We need to implement UserDetails loadUserByUsername(String username) at UserDetailsService
+
+## Creating Users inside the DB as per JdbcUserDetailsManager class
+
+* Script MySQL
+
+```sql
+
+create database eazybank;
+
+use eazybank;
+
+-- Using JdbcUserDetailsManager WE NEED TO CREATE A TABLE CALLED users
+
+CREATE TABLE `users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `enabled` INT NOT NULL,
+  PRIMARY KEY (`id`));
+
+-- authorities is waited too
+CREATE TABLE `authorities` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(45) NOT NULL,
+  `authority` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
+
+INSERT IGNORE INTO `users` VALUES(NULL, 'happy', '12345', '1');
+INSERT IGNORE INTO `authorities` VALUES(NULL, 'happy', 'write');
+
+```
+
+## Creating custom implementation of UserDetailsService
+
+```sql
+CREATE TABLE `customer` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(45) NOT NULL,
+  `pwd` VARCHAR(45) NOT NULL,
+  `role` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+INSERT IGNORE INTO `customer` VALUES(NULL, 'gustavo@example.com', '54321', 'admin');
+
+```
