@@ -111,3 +111,28 @@ management.endpoints.web.exposure.include=*
   * Event Storming Sizing - Conducting an interactive fun session among various stake holder to identify the list of important events in the system like 'Completed Payment', 'Search for a Product' etc. Based on the events we can identify 'Commands', 'Reactions' and can try to group them to a domain-driven services.
 
 * Reference for Event Storming Session: https://www.lucidchart.com/blog/ddd-event-storming
+
+# Right sizing microservices
+## Identifying services boundaries
+
+* Now let's take an example of a Bank application that needs to be migrated/build based on a microservices architecture and try to do sizing of the services.
+
+![](imgs/07.png)
+
+
+# Challenge 2 with Microservices
+## Deployment, Portability & Scalability
+
+* Deployment
+  * How do we deploy all the tiny 100s of microservices with less effort & cost?
+
+* Portability
+  * How do we move our 100s of microservices across envrinomnets with less effort, configurations & cost.
+
+* Scalability
+  * How do we scale our application based on the demand on the fly with minimum effort & cost?
+
+
+# Containerization Technology - Using Docker
+
+![](imgs/08.png)
