@@ -136,3 +136,18 @@ management.endpoints.web.exposure.include=*
 # Containerization Technology - Using Docker
 
 ![](imgs/08.png)
+
+# Intro to Docker
+## What are containers & docker
+
+* What is a container?
+  * A container is a loosely isolated environment that allows us to build and run software packages. These software packages include the code and all dependencies to run applications quickly and reliably on any computing environmnet. We call these packages container images.
+
+* What is software containerization?
+  * Softaware containerization is an OS virtualization method that is used to deploy and run containers without using a virtual machine (VM). Containers can run on physical hardware, in the cloud, VMs, and across multiple OSs.
+
+* What is Docker?
+  * Docker is one of the tools that used the idea of the isolated resources to create a set of tools that allows applications to be packaged with all the dependencies installed and ran wherever wanted.
+
+## Docker Architecture
+![](imgs/09.png)
