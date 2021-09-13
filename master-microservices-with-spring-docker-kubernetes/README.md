@@ -151,3 +151,63 @@ management.endpoints.web.exposure.include=*
 
 ## Docker Architecture
 ![](imgs/09.png)
+
+
+## Create Accounts microservice docker image from the Dockerfile
+
+* Inside accounts
+  * mvn install - to create jar
+  * docker build . -t eazybytes/accounts
+    * It will build an image in your local system. You can see running docker images.
+    * The image name will be eazybytes/accounts
+  * docker image inspect $CONTAINER_ID
+    * See the details about that image.
+  * docker run -p 8080:8080 eazybytes/accounts
+    * create a countainer using image name
+  * docker ps
+    * show the containers running
+  * docker logs $CONTAINER_ID or docker logs -f $CONTAINER_ID
+    * Get logs of that container
+    * -f = follow
+  * docker stop fc
+  * docker ps -a
+    * all the containers presented in my server
+  * docker start fc $PART_OF_CONTAINER_ID
+    * It will start any container with part of container id
+  * docker container pause 
+  * docker kill $CONTAINER_ID
+    * Kill instantly the container
+  * docker rm $CONTAINER_ID
+
+
+# Introduction to Buildpacks
+
+* buildpacks.io
+* The job of buildpacks is to etect and gather everything that your application need to build and run successfuly in any cloud provider.
+* Buildpacks is a concept and for java application we work with paketo.io
+
+## Creating docker image of Loans microservice using Buildpacks without Dockerfile
+
+```xml
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+          <!-- image name for this microservice -->
+					<image>
+						<name>eazybytes/${project.artifactId}</name>
+					</image>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+```
+
+* Inside loans run:
+  * mvn spring-boot:build-image
+    * It will create a docker image
+
+
+# Pushing Docker images from your local to remote hub repository
