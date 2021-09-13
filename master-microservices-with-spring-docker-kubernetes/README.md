@@ -112,4 +112,42 @@ management.endpoints.web.exposure.include=*
 
 * Reference for Event Storming Session: https://www.lucidchart.com/blog/ddd-event-storming
 
+# Right sizing microservices
+## Identifying services boundaries
+
+* Now let's take an example of a Bank application that needs to be migrated/build based on a microservices architecture and try to do sizing of the services.
+
 ![](imgs/07.png)
+
+
+# Challenge 2 with Microservices
+## Deployment, Portability & Scalability
+
+* Deployment
+  * How do we deploy all the tiny 100s of microservices with less effort & cost?
+
+* Portability
+  * How do we move our 100s of microservices across envrinomnets with less effort, configurations & cost.
+
+* Scalability
+  * How do we scale our application based on the demand on the fly with minimum effort & cost?
+
+
+# Containerization Technology - Using Docker
+
+![](imgs/08.png)
+
+# Intro to Docker
+## What are containers & docker
+
+* What is a container?
+  * A container is a loosely isolated environment that allows us to build and run software packages. These software packages include the code and all dependencies to run applications quickly and reliably on any computing environmnet. We call these packages container images.
+
+* What is software containerization?
+  * Softaware containerization is an OS virtualization method that is used to deploy and run containers without using a virtual machine (VM). Containers can run on physical hardware, in the cloud, VMs, and across multiple OSs.
+
+* What is Docker?
+  * Docker is one of the tools that used the idea of the isolated resources to create a set of tools that allows applications to be packaged with all the dependencies installed and ran wherever wanted.
+
+## Docker Architecture
+![](imgs/09.png)
