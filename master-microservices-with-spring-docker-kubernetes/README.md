@@ -111,3 +111,5 @@ management.endpoints.web.exposure.include=*
   * Event Storming Sizing - Conducting an interactive fun session among various stake holder to identify the list of important events in the system like 'Completed Payment', 'Search for a Product' etc. Based on the events we can identify 'Commands', 'Reactions' and can try to group them to a domain-driven services.
 
 * Reference for Event Storming Session: https://www.lucidchart.com/blog/ddd-event-storming
+
+![](imgs/07.png)
